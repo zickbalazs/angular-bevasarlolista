@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Document</title>
+</head>
+<body ng-app="app">
+    <div class="container bg-light p-0 my-3" ng-controller="lista">
+        <header class=" text-center bg-dark text-light py-5">
+            <h1>{{statics.title}}</h1>
+        </header>
+        <main>
+            <section class="mb-4" id="add">
+                <h3 class="bg-success text-light py-3 px-3">Áru felvétele</h3>
+                <div class="px-4">
+                    <div class="form-item mb-3">
+                        <label class="form-label">Árú neve</label>
+                        <input type="text" class="form-control" placeholder="Kenyér" ng-model="_add.name">
+                    </div>
+                    <div class="form-item mb-3">
+                        <label class="form-label">Mennyiség</label>
+                        <input type="text" class="form-control" placeholder="500 g" ng-model="_add.unit">
+                    </div>
+                    <div class="form-item mb-3">
+                        <label class="form-label">Egységár</label>
+                        <input type="number" min='1' value="1" class="form-control" placeholder="500 Ft / g" ng-model="_add.price">
+                    </div>
+                    <div>
+                        <label class="form-label">Kategória</label>
+                        <select ng-model="_add.category" class="form-select">
+                            <option value="" selected disabled>Válasszon!</option>
+                            <option ng-repeat="category in categories" value="{{category}}">{{category}}</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label">Darab</label>
+                        <input type="number" min="1" ng-model="_add.amount" class="form-control" placeholder="1 db">
+                    </div>
+                    <button ng-click="add()" class="btn btn-outline-success mt-3"><i class="bi bi-cart-plus"></i></button>
+                </div>
+            </section>
+            <section>
+                <h3 class="bg-danger text-light py-3 px-3">Bevásárlólistája</h3>
+                <div class="input-group mb-2 px-4">
+                    <label for="" class="bg-primary text-light input-group-text"><i class="bi bi-search-heart"></i></label>
+                    <input type="text" ng-modul="searchField" class="form-control">
+                </div>
+                <table class="table table-bordered">
+                    <tbody ng-repeat="category in categories">
+                        <tr>
+                            <th colspan="{{tableHeaders.length}}" class="bg-dark text-center text-light">{{category}}</th>
+                        </tr>
+                        <tr ng-if="(cart|filter:{category:category}).length==0">
+                            <th colspan="{{tableHeaders.length}}" class="bg-danger text-center">Nincs ilyen kategóriában terméke!</th>
+                        </tr>
+                        <tr ng-if="(cart|filter:{category:category}).length>0">
+                            <th ng-repeat="header in tableHeaders">{{header}}</th>
+                        </tr>
+                        <tr ng-repeat="item in filtered = ( cart | filter: searchField)" ng-if="$parent.category==item.category">
+                            <td>{{item.id}}</td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.unitAmount*item.amount}} {{item.unitName}}</td>
+                            <td>{{item.fullprice}} Ft</td>
+                            <td ><button ng-click="remove(item.id)" class="w-100 btn btn-outline-danger"><i class="bi bi-x-circle"></i></button></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="{{tableHeaders.length-1}}">Összesen:</th>
+                            <th>{{ count() }} Ft</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </section>
+        </main>
+        <footer class="mt-3 text-center text-light bg-dark py-2">
+            <p>{{statics.madeby}}&copy; | {{statics.year}}.</p>
+        </footer>
+    </div>
+    <script src="./js/angular.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <script src="./js/class.js"></script>
+    <script src="./js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+body{
+    background: radial-gradient(circle, rgb(15, 15, 15) 0%, rgb(53, 53, 53) 100%);
+}
+.table{
+    width: 95%;
+    margin:auto;
+}
+footer>p{
+    margin: 0;
+}
