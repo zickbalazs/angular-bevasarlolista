@@ -1,6 +1,5 @@
 let app = angular.module('app', []);
 
-
 app.controller('lista', function ($scope){
     $scope.statics = {
         title: 'Bevasarlólista Alkalmazás',
@@ -8,7 +7,7 @@ app.controller('lista', function ($scope){
         year: 2022
     }
     $scope.categories = [ "Pékárú", "Élelmiszerek", "Takarítási szerek", "Egyéb" ]
-    $scope.tableHeaders = [ "#.", "Termék neve", "Mennyiség", "Ár", "" ]
+    $scope.tableHeaders = [ "#.", "Termék neve", "Mennyiség", "Ár", "Törlés" ]
     $scope.addItem = {};
     $scope.cart = [];
     $scope.total = 0;

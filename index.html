@@ -60,18 +60,18 @@
                         <tr ng-if="(cart|filter:{category:category}).length>0">
                             <th ng-repeat="header in tableHeaders">{{header}}</th>
                         </tr>
-                        <tr ng-repeat="item in filtered = ( cart | filter: searchField)" ng-if="$parent.category==item.category">
+                        <tr ng-repeat="item in filtered = ( cart | filter: searchField | orderBy:'id')" ng-if="$parent.category==item.category">
                             <td>{{item.id}}</td>
                             <td>{{item.name}}</td>
                             <td>{{item.unitAmount*item.amount}} {{item.unitName}}</td>
                             <td>{{item.fullprice}} Ft</td>
-                            <td ><button ng-click="remove(item.id)" class="w-100 btn btn-outline-danger"><i class="bi bi-x-circle"></i></button></td>
+                            <td ><button ng-click="remove(item.id)" class="w-50 btn btn-outline-danger"><i class="bi bi-x-circle"></i></button></td>
                         </tr>
                     </tbody>
                     <tfoot>
                         <tr>
                             <th colspan="{{tableHeaders.length-1}}">Összesen:</th>
-                            <th>{{ count() }} Ft</th>
+                            <th ng-if="count()!=isNaN">{{ count() }} Ft</th>
                         </tr>
                     </tfoot>
                 </table>
